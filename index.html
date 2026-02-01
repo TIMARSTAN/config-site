@@ -2,17 +2,20 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<title>Config By Bahman - نسخه خفن</title>
+<title>Config By Bahman</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- 🔄 Loading Screen 3D -->
+<!-- 🌟 Loading Screen -->
 <div id="loading">
+  <div class="loader">
+    <span></span><span></span><span></span>
+  </div>
   <h2>در حال بارگذاری Config By Bahman...</h2>
 </div>
 
-<!-- 🔐 ورود -->
+<!-- 🔐 صفحه ورود -->
 <div id="lock" class="card" style="display:none;">
   <h2>🔐 ورود</h2>
   <p>برای دیدن کانفیگ رمز را وارد کنید</p>
@@ -23,117 +26,111 @@
   <button onclick="checkPass()">ورود</button>
 </div>
 
-<!-- 🔓 محتوا -->
+<!-- 🔓 محتوای اصلی -->
 <div id="content" style="display:none">
+
   <h1 class="title">🚀 Config By Bahman</h1>
   <p class="subtitle" id="updateTime"></p>
   <p class="subtitle" id="visitCounter"></p>
-  <p class="subtitle" id="historyTitle">📜 تاریخچه شما:</p>
-  <ul id="historyList"></ul>
+  <p class="subtitle" id="onlineUsers">👥 کاربران آنلاین: 1</p>
 
-  <!-- کانفیگ‌ها -->
-  <div class="card" data-id="cfg1">
+  <!-- 📦 کانفیگ‌ها -->
+  <div class="card">
     <h3>Config #1</h3>
     <textarea id="cfg1" readonly>vless://example1...</textarea>
     <div class="buttons">
       <button onclick="copyConfig('cfg1')">📋 کپی</button>
-      <a class="download" href="configs/config1.txt" download onclick="addHistory('cfg1')">⬇️ دانلود</a>
+      <a class="download" href="configs/config1.txt" download>⬇️ دانلود</a>
       <button class="like-btn" onclick="likeConfig(this, 'cfg1')">❤️ <span>0</span></button>
     </div>
   </div>
 
-  <div class="card" data-id="cfg2">
+  <div class="card">
     <h3>Config #2</h3>
     <textarea id="cfg2" readonly>vless://example2...</textarea>
     <div class="buttons">
       <button onclick="copyConfig('cfg2')">📋 کپی</button>
-      <a class="download" href="configs/config2.txt" download onclick="addHistory('cfg2')">⬇️ دانلود</a>
+      <a class="download" href="configs/config2.txt" download>⬇️ دانلود</a>
       <button class="like-btn" onclick="likeConfig(this, 'cfg2')">❤️ <span>0</span></button>
     </div>
   </div>
 
+  <!-- 📢 کانال تلگرام -->
+  <div class="card telegram-card">
+    <h3>📢 کانال تلگرام</h3>
+    <a class="download" href="https://t.me/filter_bahman" target="_blank">
+      👉 عضویت در کانال
+    </a>
+  </div>
+
 </div>
 
-<!-- نوتیفیکیشن کپی و افکت صوتی -->
-<audio id="copySound" src="copy-sound.mp3" preload="auto"></audio>
+<!-- نوتیفیکیشن کپی -->
 <div id="notify">✅ کپی شد!</div>
 
 <script>
 const SITE_PASSWORD = "MMDBAHMAN";
 
-/* نمایش/عدم نمایش رمز */
+/* 👁 نمایش/عدم نمایش رمز */
 document.getElementById("togglePass").addEventListener("click", function(){
   const input = document.getElementById("password");
   input.type = (input.type === "password") ? "text" : "password";
 });
 
-/* چک رمز و افکت ورود */
+/* 🔑 چک رمز و انیمیشن ورود */
 function checkPass() {
   const input = document.getElementById("password").value;
   if(input === SITE_PASSWORD){
     document.getElementById("lock").classList.add("unlock");
     setTimeout(()=>{
-      document.getElementById("lock").style.display="none";
-      document.getElementById("content").style.display="block";
-      loadHistory();
+      document.getElementById("lock").style.display = "none";
+      document.getElementById("content").style.display = "block";
     }, 800);
   } else {
-    alert("رمز اشتباه ❌");
+    alert("رمز اشتباه است ❌");
   }
 }
 
-/* کپی کانفیگ با افکت صوتی و نوتیفیکیشن */
-function copyConfig(id){
+/* 📋 کپی کانفیگ با نوتیفیکیشن */
+function copyConfig(id) {
   const text = document.getElementById(id);
   navigator.clipboard.writeText(text.value);
-  document.getElementById('notify').style.opacity=1;
-  document.getElementById('copySound').play();
-  addHistory(id);
-  setTimeout(()=>{document.getElementById('notify').style.opacity=0},1500);
+  const notify = document.getElementById("notify");
+  notify.style.opacity = 1;
+  setTimeout(()=>{notify.style.opacity = 0;}, 1500);
 }
 
-/* ❤️ لایک با نئون و ذخیره localStorage */
-function likeConfig(btn,id){
-  let count = parseInt(localStorage.getItem('like_'+id)||0);
+/* ❤️ سیستم لایک */
+function likeConfig(btn, id){
+  let count = parseInt(localStorage.getItem('like_'+id) || 0);
   count++;
-  localStorage.setItem('like_'+id,count);
-  btn.querySelector('span').innerText=count;
-  // افکت رقص نئون
-  const card = btn.closest('.card');
-  card.classList.add('like-anim');
-  setTimeout(()=>card.classList.remove('like-anim'),500);
+  localStorage.setItem('like_'+id, count);
+  btn.querySelector('span').innerText = count;
 }
 
-/* تاریخچه کپی/دانلود */
-function addHistory(id){
-  let history = JSON.parse(localStorage.getItem('history')||'[]');
-  if(!history.includes(id)) history.push(id);
-  localStorage.setItem('history',JSON.stringify(history));
-  loadHistory();
-}
+/* ⏱ تاریخ آپدیت */
+document.getElementById("updateTime").innerText =
+"آخرین آپدیت: " + new Date().toLocaleString("fa-IR");
 
-function loadHistory(){
-  const historyList=document.getElementById('historyList');
-  const history=JSON.parse(localStorage.getItem('history')||'[]');
-  historyList.innerHTML='';
-  history.forEach(h=>{
-    const text=document.getElementById(h).value;
-    const li=document.createElement('li');
-    li.textContent=text.substring(0,50)+'...';
-    historyList.appendChild(li);
-  });
-}
+/* 👁 شمارنده بازدید و کاربران آنلاین ساده */
+let visits = parseInt(localStorage.getItem("visits") || 0);
+visits++;
+localStorage.setItem("visits", visits);
+document.getElementById("visitCounter").innerText =
+"👁 بازدید شما: " + visits;
 
-/* تاریخ آپدیت و شمارنده */
-document.getElementById("updateTime").innerText="آخرین آپدیت: "+new Date().toLocaleString("fa-IR");
-let visits=parseInt(localStorage.getItem("visits")||0); visits++; localStorage.setItem("visits",visits);
-document.getElementById("visitCounter").innerText="👁 بازدید شما: "+visits;
+/* کاربران آنلاین شبیه‌سازی */
+let online = 1;
+setInterval(()=>{
+  online = Math.floor(Math.random()*5)+1;
+  document.getElementById("onlineUsers").innerText = "👥 کاربران آنلاین: " + online;
+}, 5000);
 
-/* صفحه بارگذاری 3D */
-window.addEventListener('load',()=>{
-  const loader=document.getElementById('loading');
-  loader.style.opacity=0;
-  setTimeout(()=>{loader.style.display='none';document.getElementById("lock").style.display="block";},800);
+/* ⏳ صفحه بارگذاری */
+window.addEventListener('load', ()=>{
+  const loader = document.getElementById('loading');
+  loader.style.opacity = 0;
+  setTimeout(()=>{ loader.style.display='none'; document.getElementById("lock").style.display="block"; }, 800);
 });
 </script>
 </body>
