@@ -2,40 +2,92 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>Config Center</title>
+  <title>Config By Bahman</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<h1 class="title">🚀 Config By Bahman</h1>
-<p class="subtitle">آپدیت روزانه • تست‌شده</p>
+<!-- 🔐 قفل رمز -->
+<div id="lock" class="card">
+  <h2>🔐 ورود</h2>
+  <p>برای دیدن کانفیگ رمز رو وارد کن</p>
+  <input id="password" type="password" placeholder="رمز عبور">
+  <button onclick="checkPass()">ورود</button>
+</div>
 
+<!-- 🔓 محتوای اصلی -->
+<div id="content" style="display:none">
+
+<h1 class="title">🚀 Config By Bahman</h1>
+<p class="subtitle" id="updateTime"></p>
+
+<!-- 👁 شمارنده -->
+<p class="subtitle" id="visitCounter"></p>
+
+<!-- 📦 کانفیگ 1 -->
 <div class="card">
   <h3>Config #1</h3>
   <textarea id="cfg1" readonly>
-vless://52bc6ff8-b0f5-44b5-8593-9c5fd4405f66@chatgpt.com:443?path=%2FeyJqdW5rIjoiSkc5NlhzOUoxYnVudGEiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6W119%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshahiran.pubgiimobilesuu1.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JAvidshaHIrAN.PUBGiImobiLEsUu1.woRKERS.Dev#%D8%AA%D9%84%DA%AF%D8%B1%D8%A7%D9%85%20%3A%40filter_bahman
+اینجا کانفیگ اول
   </textarea>
   <button onclick="copyConfig('cfg1')">📋 کپی</button>
   <a class="download" href="configs/config1.txt" download>⬇️ دانلود</a>
 </div>
 
+<!-- 📦 کانفیگ 2 -->
 <div class="card">
   <h3>Config #2</h3>
   <textarea id="cfg2" readonly>
-vless://52bc6ff8-b0f5-44b5-8593-9c5fd4405f66@chatgpt.com:2083?path=%2FeyJqdW5rIjoib0xMb1pXWWxHQmRIWk8iLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6W119%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshahiran.pubgiimobilesuu1.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JAVidshAhiran.PuBgIiMObILeSUu1.wORKeRS.Dev#%D8%B3%D8%B1%D8%B9%D8%AA%20%D8%A7%D9%85%D8%A7%D8%B1%D8%AA%D8%AA
+اینجا کانفیگ دوم
   </textarea>
   <button onclick="copyConfig('cfg2')">📋 کپی</button>
   <a class="download" href="configs/config2.txt" download>⬇️ دانلود</a>
 </div>
 
+<!-- 📢 تلگرام -->
+<div class="card">
+  <h3>📢 کانال تلگرام</h3>
+  <a class="download" href="https://t.me/filter_bahman" target="_blank">
+    👉 عضویت در کانال
+  </a>
+</div>
+
+</div>
+
 <script>
+/* 🔑 رمز سایت */
+const SITE_PASSWORD = "MMDBAHMAN";
+
+/* چک رمز */
+function checkPass() {
+  const input = document.getElementById("password").value;
+  if (input === SITE_PASSWORD) {
+    document.getElementById("lock").style.display = "none";
+    document.getElementById("content").style.display = "block";
+  } else {
+    alert("رمز اشتباهه ❌");
+  }
+}
+
+/* 📋 کپی */
 function copyConfig(id) {
   const text = document.getElementById(id);
   text.select();
-  text.setSelectionRange(0, 99999);
   document.execCommand("copy");
   alert("کپی شد ✅");
 }
+
+/* ⏱ تاریخ آپدیت */
+document.getElementById("updateTime").innerText =
+"آخرین آپدیت: " + new Date().toLocaleString("fa-IR");
+
+/* 👁 شمارنده بازدید */
+let visits = localStorage.getItem("visits") || 0;
+visits++;
+localStorage.setItem("visits", visits);
+document.getElementById("visitCounter").innerText =
+"👁 بازدید شما از این سایت: " + visits;
 </script>
 
 </body>
