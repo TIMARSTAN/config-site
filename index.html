@@ -7,35 +7,23 @@
 </head>
 <body>
 
-<!-- Theme Toggle -->
+<!-- Theme -->
 <button id="themeToggle">🌙</button>
 
 <!-- Loading -->
 <div id="loading">
-  <div class="loader">
-    <span></span><span></span><span></span>
-  </div>
-  <h2>در حال بارگذاری Config By Bahman...</h2>
+  <div class="loader"><span></span><span></span><span></span></div>
+  <h2>در حال بارگذاری...</h2>
 </div>
 
 <!-- Login -->
 <div id="lock" class="card" style="display:none;">
-  <h2>🔐 ورود عمومی</h2>
-  <p>برای دیدن کانفیگ رمز را وارد کنید</p>
-
+  <h3>🔐 ورود</h3>
   <div class="password-wrapper">
-    <input id="password" type="password" placeholder="رمز عبور">
+    <input id="password" type="password" placeholder="رمز ورود">
     <span id="togglePass" class="show-pass">👁️</span>
   </div>
-
   <button onclick="checkPass()">ورود</button>
-</div>
-
-<!-- VIP Lock -->
-<div id="vipLock" class="card" style="display:none;">
-  <h2>⭐ ورود VIP</h2>
-  <input id="vipPass" type="password" placeholder="رمز VIP">
-  <button onclick="checkVip()">ورود VIP</button>
 </div>
 
 <!-- Content -->
@@ -44,18 +32,35 @@
   <h1 class="title">🚀 Config By Bahman</h1>
   <p class="subtitle" id="onlineUsers">👥 کاربران آنلاین: ...</p>
 
-  <!-- Normal Config -->
+  <!-- FREE CONFIG -->
   <div class="card">
     <h3>Config Free</h3>
     <textarea id="cfg1" readonly>vless://FREE-CONFIG...</textarea>
-    <button onclick="copyConfig('cfg1')">📋 کپی</button>
+
+    <div class="actions">
+      <button onclick="copyConfig('cfg1')">📋 کپی</button>
+      <button class="like-btn" onclick="toggleLike('cfg1')">
+        ❤️ <span id="like-cfg1">0</span>
+      </button>
+    </div>
   </div>
 
-  <!-- VIP Config -->
-  <div class="card vip">
+  <!-- VIP LOGIN -->
+  <div id="vipLock" class="card">
+    <h3>⭐ دریافت Config VIP</h3>
+    <input id="vipPass" type="password" placeholder="رمز VIP">
+    <button onclick="checkVip()">باز کردن VIP</button>
+  </div>
+
+  <!-- VIP CONFIG -->
+  <div id="vipContent" class="card vip" style="display:none;">
     <h3>⭐ Config VIP</h3>
-    <textarea id="vipCfg" readonly>vless://VIP-CONFIG...</textarea>
-    <button onclick="copyConfig('vipCfg')">📋 کپی</button>
+    <textarea readonly>vless://VIP-CONFIG...</textarea>
+  </div>
+
+  <!-- Telegram -->
+  <div class="card telegram-card">
+    <a href="https://t.me/filter_bahman" target="_blank">📢 عضویت در کانال تلگرام</a>
   </div>
 
 </div>
@@ -63,47 +68,46 @@
 <div id="notify">✅ کپی شد!</div>
 
 <script>
-/* ====== PASSWORDS ====== */
+/* ===== PASSWORDS ===== */
 const SITE_PASSWORD = "MMDBAHMAN";
 const VIP_PASSWORD  = "VIPBAHMAN";
 
-/* ====== SHOW PASS ====== */
-togglePass.onclick = () => {
-  password.type = password.type === "password" ? "text" : "password";
-};
+/* ===== WORKER URL (بعداً جایگزین میکنی) ===== */
+const WORKER_URL = "https://YOUR-WORKER.workers.dev";
 
-/* ====== LOGIN ====== */
+/* show pass */
+togglePass.onclick=()=>password.type=
+password.type==="password"?"text":"password";
+
+/* login */
 function checkPass(){
-  if(password.value === SITE_PASSWORD){
+  if(password.value===SITE_PASSWORD){
     lock.classList.add("neon-success");
     setTimeout(()=>{
       lock.style.display="none";
-      vipLock.style.display="block";
-    },800);
+      content.style.display="block";
+      initLikes();
+    },700);
   } else alert("رمز اشتباه ❌");
 }
 
-/* ====== VIP LOGIN ====== */
+/* vip */
 function checkVip(){
-  if(vipPass.value === VIP_PASSWORD){
-    vipLock.classList.add("neon-success");
-    setTimeout(()=>{
-      vipLock.style.display="none";
-      content.style.display="block";
-    },800);
+  if(vipPass.value===VIP_PASSWORD){
+    vipLock.style.display="none";
+    vipContent.style.display="block";
   } else alert("رمز VIP اشتباه ❌");
 }
 
-/* ====== COPY ====== */
+/* copy */
 function copyConfig(id){
   navigator.clipboard.writeText(document.getElementById(id).value);
   notify.style.opacity=1;
   setTimeout(()=>notify.style.opacity=0,1500);
 }
 
-/* ====== THEME ====== */
-const toggle=document.getElementById("themeToggle");
-toggle.onclick=()=>{
+/* theme */
+themeToggle.onclick=()=>{
   document.body.classList.toggle("neon");
   localStorage.setItem("theme",
     document.body.classList.contains("neon")?"neon":"dark");
@@ -112,23 +116,37 @@ if(localStorage.getItem("theme")==="neon"){
   document.body.classList.add("neon");
 }
 
-/* ====== ONLINE USERS (Cloudflare) ====== */
-/* 🔴 این URL رو بعداً جایگزین می‌کنی */
-const WORKER_URL = "https://your-worker-name.workers.dev";
+/* ===== LIKES (REAL) ===== */
+let liked=false;
 
-async function updateOnline(){
-  try{
-    const r = await fetch(WORKER_URL);
-    const d = await r.json();
-    onlineUsers.innerText="👥 کاربران آنلاین: "+d.online;
-  }catch{
-    onlineUsers.innerText="👥 کاربران آنلاین: -";
-  }
+async function initLikes(){
+  const r=await fetch(WORKER_URL+"/likes?id=cfg1");
+  const d=await r.json();
+  document.getElementById("like-cfg1").innerText=d.count;
+  liked=localStorage.getItem("liked_cfg1")==="1";
 }
-setInterval(updateOnline,5000);
-updateOnline();
 
-/* ====== LOADING ====== */
+async function toggleLike(id){
+  const action=liked?"unlike":"like";
+  const r=await fetch(`${WORKER_URL}/likes?id=${id}&action=${action}`);
+  const d=await r.json();
+  document.getElementById("like-"+id).innerText=d.count;
+  liked=!liked;
+  localStorage.setItem("liked_cfg1",liked?"1":"0");
+}
+
+/* online users */
+async function online(){
+  try{
+    const r=await fetch(WORKER_URL+"/online");
+    const d=await r.json();
+    onlineUsers.innerText="👥 کاربران آنلاین: "+d.online;
+  }catch{}
+}
+setInterval(online,5000);
+online();
+
+/* loading */
 window.onload=()=>{
   loading.style.opacity=0;
   setTimeout(()=>{
