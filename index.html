@@ -7,6 +7,9 @@
 </head>
 <body>
 
+<!-- Theme Toggle -->
+<button id="themeToggle">🌙</button>
+
 <!-- Loading -->
 <div id="loading">
   <div class="loader">
@@ -17,7 +20,7 @@
 
 <!-- Login -->
 <div id="lock" class="card" style="display:none;">
-  <h2>🔐 ورود</h2>
+  <h2>🔐 ورود عمومی</h2>
   <p>برای دیدن کانفیگ رمز را وارد کنید</p>
 
   <div class="password-wrapper">
@@ -28,24 +31,31 @@
   <button onclick="checkPass()">ورود</button>
 </div>
 
+<!-- VIP Lock -->
+<div id="vipLock" class="card" style="display:none;">
+  <h2>⭐ ورود VIP</h2>
+  <input id="vipPass" type="password" placeholder="رمز VIP">
+  <button onclick="checkVip()">ورود VIP</button>
+</div>
+
 <!-- Content -->
 <div id="content" style="display:none">
 
   <h1 class="title">🚀 Config By Bahman</h1>
-  <p class="subtitle" id="updateTime"></p>
-  <p class="subtitle" id="visitCounter"></p>
-  <p class="subtitle" id="onlineUsers">👥 کاربران آنلاین: 1</p>
+  <p class="subtitle" id="onlineUsers">👥 کاربران آنلاین: ...</p>
 
+  <!-- Normal Config -->
   <div class="card">
-    <h3>Config #1</h3>
-    <textarea id="cfg1" readonly>vless://example...</textarea>
+    <h3>Config Free</h3>
+    <textarea id="cfg1" readonly>vless://FREE-CONFIG...</textarea>
     <button onclick="copyConfig('cfg1')">📋 کپی</button>
-    <button class="like-btn" onclick="likeConfig(this,'cfg1')">❤️ <span>0</span></button>
   </div>
 
-  <div class="card telegram-card">
-    <h3>📢 کانال تلگرام</h3>
-    <a class="download" href="https://t.me/filter_bahman" target="_blank">عضویت</a>
+  <!-- VIP Config -->
+  <div class="card vip">
+    <h3>⭐ Config VIP</h3>
+    <textarea id="vipCfg" readonly>vless://VIP-CONFIG...</textarea>
+    <button onclick="copyConfig('vipCfg')">📋 کپی</button>
   </div>
 
 </div>
@@ -53,58 +63,72 @@
 <div id="notify">✅ کپی شد!</div>
 
 <script>
+/* ====== PASSWORDS ====== */
 const SITE_PASSWORD = "MMDBAHMAN";
+const VIP_PASSWORD  = "VIPBAHMAN";
 
-/* show pass */
+/* ====== SHOW PASS ====== */
 togglePass.onclick = () => {
   password.type = password.type === "password" ? "text" : "password";
 };
 
-/* neon login */
-function checkPass() {
-  const lock = document.getElementById("lock");
-  if (password.value === SITE_PASSWORD) {
+/* ====== LOGIN ====== */
+function checkPass(){
+  if(password.value === SITE_PASSWORD){
     lock.classList.add("neon-success");
-    document.body.classList.add("neon-bg");
-
-    setTimeout(() => {
-      lock.style.display = "none";
-      content.style.display = "block";
-      document.body.classList.remove("neon-bg");
-    }, 900);
-  } else {
-    lock.style.animation = "shake 0.4s";
-    setTimeout(()=>lock.style.animation="",400);
-    alert("رمز اشتباه است ❌");
-  }
+    setTimeout(()=>{
+      lock.style.display="none";
+      vipLock.style.display="block";
+    },800);
+  } else alert("رمز اشتباه ❌");
 }
 
-/* copy */
+/* ====== VIP LOGIN ====== */
+function checkVip(){
+  if(vipPass.value === VIP_PASSWORD){
+    vipLock.classList.add("neon-success");
+    setTimeout(()=>{
+      vipLock.style.display="none";
+      content.style.display="block";
+    },800);
+  } else alert("رمز VIP اشتباه ❌");
+}
+
+/* ====== COPY ====== */
 function copyConfig(id){
   navigator.clipboard.writeText(document.getElementById(id).value);
   notify.style.opacity=1;
   setTimeout(()=>notify.style.opacity=0,1500);
 }
 
-/* like */
-function likeConfig(btn,id){
-  let c = +localStorage.getItem("like_"+id)||0;
-  c++;
-  localStorage.setItem("like_"+id,c);
-  btn.querySelector("span").innerText=c;
+/* ====== THEME ====== */
+const toggle=document.getElementById("themeToggle");
+toggle.onclick=()=>{
+  document.body.classList.toggle("neon");
+  localStorage.setItem("theme",
+    document.body.classList.contains("neon")?"neon":"dark");
+};
+if(localStorage.getItem("theme")==="neon"){
+  document.body.classList.add("neon");
 }
 
-/* info */
-updateTime.innerText="آخرین آپدیت: "+new Date().toLocaleString("fa-IR");
-let v=+localStorage.getItem("visits")||0;
-localStorage.setItem("visits",++v);
-visitCounter.innerText="👁 بازدید شما: "+v;
+/* ====== ONLINE USERS (Cloudflare) ====== */
+/* 🔴 این URL رو بعداً جایگزین می‌کنی */
+const WORKER_URL = "https://your-worker-name.workers.dev";
 
-setInterval(()=>{
-  onlineUsers.innerText="👥 کاربران آنلاین: "+(Math.floor(Math.random()*5)+1);
-},5000);
+async function updateOnline(){
+  try{
+    const r = await fetch(WORKER_URL);
+    const d = await r.json();
+    onlineUsers.innerText="👥 کاربران آنلاین: "+d.online;
+  }catch{
+    onlineUsers.innerText="👥 کاربران آنلاین: -";
+  }
+}
+setInterval(updateOnline,5000);
+updateOnline();
 
-/* loading */
+/* ====== LOADING ====== */
 window.onload=()=>{
   loading.style.opacity=0;
   setTimeout(()=>{
