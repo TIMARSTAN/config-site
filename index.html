@@ -1,160 +1,39 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-<meta charset="UTF-8">
-<title>Config By Bahman</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>کانفیگ‌های رایگان</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <header>
+    <h1>خوش آمدید به سایت کانفیگ‌های رایگان</h1>
+    <p>در اینجا می‌توانید کانفیگ‌های رایگان دانلود کنید.</p>
+  </header>
 
-<!-- Theme -->
-<button id="themeToggle">🌙</button>
+  <main>
+    <section class="configs">
+      <h2>کانفیگ‌های موجود</h2>
+      <ul>
+        <li>
+          <a href="configs/config1.zip" download>کانفیگ 1</a>
+          <p>این کانفیگ برای بازی X است.</p>
+        </li>
+        <li>
+          <a href="configs/config2.zip" download>کانفیگ 2</a>
+          <p>این کانفیگ برای بازی Y است.</p>
+        </li>
+        <li>
+          <a href="configs/config3.zip" download>کانفیگ 3</a>
+          <p>این کانفیگ برای بازی Z است.</p>
+        </li>
+      </ul>
+    </section>
+  </main>
 
-<!-- Loading -->
-<div id="loading">
-  <div class="loader"><span></span><span></span><span></span></div>
-  <h2>در حال بارگذاری...</h2>
-</div>
-
-<!-- Login -->
-<div id="lock" class="card" style="display:none;">
-  <h3>🔐 ورود</h3>
-  <div class="password-wrapper">
-    <input id="password" type="password" placeholder="رمز ورود">
-    <span id="togglePass" class="show-pass">👁️</span>
-  </div>
-  <button onclick="checkPass()">ورود</button>
-</div>
-
-<!-- Content -->
-<div id="content" style="display:none">
-
-  <h1 class="title">🚀 Config By Bahman</h1>
-  <p class="subtitle" id="onlineUsers">👥 کاربران آنلاین: ...</p>
-
-  <!-- FREE CONFIG -->
-  <div class="card">
-    <h3>Config Free</h3>
-    <textarea id="cfg1" readonly>vless://FREE-CONFIG...</textarea>
-
-    <div class="actions">
-      <button onclick="copyConfig('cfg1')">📋 کپی</button>
-      <button class="like-btn" onclick="toggleLike('cfg1')">
-        ❤️ <span id="like-cfg1">0</span>
-      </button>
-    </div>
-  </div>
-
-  <!-- VIP LOGIN -->
-  <div id="vipLock" class="card">
-    <h3>⭐ دریافت Config VIP</h3>
-    <input id="vipPass" type="password" placeholder="رمز VIP">
-    <button onclick="checkVip()">باز کردن VIP</button>
-  </div>
-
-  <!-- VIP CONFIG -->
-  <div id="vipContent" class="card vip" style="display:none;">
-    <h3>⭐ Config VIP</h3>
-    <textarea readonly>vless://VIP-CONFIG...</textarea>
-  </div>
-
-  <!-- Telegram -->
-  <div class="card telegram-card">
-    <a href="https://t.me/filter_bahman" target="_blank">📢 عضویت در کانال تلگرام</a>
-  </div>
-
-</div>
-
-<div id="notify">✅ کپی شد!</div>
-
-<script>
-/* ===== PASSWORDS ===== */
-const SITE_PASSWORD = "MMDBAHMAN";
-const VIP_PASSWORD  = "VIPBAHMAN";
-
-/* ===== WORKER URL (بعداً جایگزین میکنی) ===== */
-const WORKER_URL = "https://YOUR-WORKER.workers.dev";
-
-/* show pass */
-togglePass.onclick=()=>password.type=
-password.type==="password"?"text":"password";
-
-/* login */
-function checkPass(){
-  if(password.value===SITE_PASSWORD){
-    lock.classList.add("neon-success");
-    setTimeout(()=>{
-      lock.style.display="none";
-      content.style.display="block";
-      initLikes();
-    },700);
-  } else alert("رمز اشتباه ❌");
-}
-
-/* vip */
-function checkVip(){
-  if(vipPass.value===VIP_PASSWORD){
-    vipLock.style.display="none";
-    vipContent.style.display="block";
-  } else alert("رمز VIP اشتباه ❌");
-}
-
-/* copy */
-function copyConfig(id){
-  navigator.clipboard.writeText(document.getElementById(id).value);
-  notify.style.opacity=1;
-  setTimeout(()=>notify.style.opacity=0,1500);
-}
-
-/* theme */
-themeToggle.onclick=()=>{
-  document.body.classList.toggle("neon");
-  localStorage.setItem("theme",
-    document.body.classList.contains("neon")?"neon":"dark");
-};
-if(localStorage.getItem("theme")==="neon"){
-  document.body.classList.add("neon");
-}
-
-/* ===== LIKES (REAL) ===== */
-let liked=false;
-
-async function initLikes(){
-  const r=await fetch(WORKER_URL+"/likes?id=cfg1");
-  const d=await r.json();
-  document.getElementById("like-cfg1").innerText=d.count;
-  liked=localStorage.getItem("liked_cfg1")==="1";
-}
-
-async function toggleLike(id){
-  const action=liked?"unlike":"like";
-  const r=await fetch(`${WORKER_URL}/likes?id=${id}&action=${action}`);
-  const d=await r.json();
-  document.getElementById("like-"+id).innerText=d.count;
-  liked=!liked;
-  localStorage.setItem("liked_cfg1",liked?"1":"0");
-}
-
-/* online users */
-async function online(){
-  try{
-    const r=await fetch(WORKER_URL+"/online");
-    const d=await r.json();
-    onlineUsers.innerText="👥 کاربران آنلاین: "+d.online;
-  }catch{}
-}
-setInterval(online,5000);
-online();
-
-/* loading */
-window.onload=()=>{
-  loading.style.opacity=0;
-  setTimeout(()=>{
-    loading.style.display="none";
-    lock.style.display="block";
-  },600);
-};
-</script>
-
+  <footer>
+    <p>&copy; 2026 همه حقوق محفوظ است.</p>
+  </footer>
 </body>
 </html>
