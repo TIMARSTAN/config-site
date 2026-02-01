@@ -102,20 +102,16 @@ header{
 </header>
 
 <div class="config">
-  <h3 class="title">کانفیگ نمونه ۱</h3>
+  <h3 class="title">کانفیگ نمونه اول</h3>
   <button class="btn copy" onclick="copyText('CONFIG-ONE')">کپی کانفیگ</button>
-  <button class="btn like" data-id="config1" onclick="like(this)">
-❤️ <span>0</span>
-</button>
-  <input class="comment" placeholder="نظر خودتو بنویس (الکی ولی قشنگ)">
+  <button class="btn like" onclick="like(this)">❤️ <span>0</span></button>
+  <input class="comment" placeholder="نظر خودتو بنویس">
 </div>
 
 <div class="config">
-  <h3 class="title">کانفیگ نمونه ۲</h3>
+  <h3 class="title">کانفیگ نمونه دوم</h3>
   <button class="btn copy" onclick="copyText('CONFIG-TWO')">کپی کانفیگ</button>
-  <button class="btn like" data-id="config2" onclick="like(this)">
-❤️ <span>0</span>
-</button>
+  <button class="btn like" onclick="like(this)">❤️ <span>0</span></button>
   <input class="comment" placeholder="نظر خودتو بنویس">
 </div>
 
@@ -129,52 +125,71 @@ header{
 /* ورود با رمز */
 function login(){
   const pass=document.getElementById("password").value;
-  if(pass==="1234"){   // ← رمز ورود
+  if(pass==="1234"){
     document.getElementById("login").style.display="none";
     document.getElementById("site").style.display="block";
+    loadLikes();
   }else{
     alert("رمز اشتباهه");
   }
 }
 
-/* کپی */
+/* کپی کانفیگ */
 function copyText(text){
   navigator.clipboard.writeText(text);
   alert("کپی شد");
 }
 
-/* لایک */
-function like(btn){
-  const id = btn.getAttribute("data-id");
-  const span = btn.querySelector("span");
-  const storageKey = "like_" + id;
+/* ساخت ID از اسم کانفیگ */
+function makeId(text){
+  return text.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+}
 
-  let liked = localStorage.getItem(storageKey) === "true";
+/* لایک واقعی */
+function like(btn){
+  const box = btn.closest(".config");
+  const title = box.querySelector(".title").innerText;
+  const id = makeId(title);
+  const key = "like_" + id;
+
+  let liked = localStorage.getItem(key) === "true";
+  let span = btn.querySelector("span");
   let count = parseInt(span.innerText);
 
   if(!liked){
     count++;
-    localStorage.setItem(storageKey, "true");
-    btn.classList.add("liked");
-    btn.style.opacity = "0.6";
+    localStorage.setItem(key,"true");
+    btn.style.opacity="0.6";
   }else{
     count--;
-    localStorage.setItem(storageKey, "false");
-    btn.classList.remove("liked");
-    btn.style.opacity = "1";
+    localStorage.setItem(key,"false");
+    btn.style.opacity="1";
   }
 
   span.innerText = count;
 }
-  
+
+/* لود لایک بعد رفرش */
+function loadLikes(){
+  document.querySelectorAll(".config").forEach(box=>{
+    const title = box.querySelector(".title").innerText;
+    const id = makeId(title);
+    const key = "like_" + id;
+    const btn = box.querySelector(".like");
+    const span = btn.querySelector("span");
+
+    if(localStorage.getItem(key)==="true"){
+      btn.style.opacity="0.6";
+    }
+  });
+}
 
 /* جستجو */
 function searchConfigs(){
   let input=document.getElementById("search").value.toLowerCase();
-  let configs=document.querySelectorAll(".config");
-  configs.forEach(c=>{
-    let title=c.querySelector(".title").innerText.toLowerCase();
-    c.style.display= title.includes(input) ? "block":"none";
+  document.querySelectorAll(".config").forEach(c=>{
+    let t=c.querySelector(".title").innerText.toLowerCase();
+    c.style.display=t.includes(input)?"block":"none";
   });
 }
 </script>
