@@ -54,3 +54,22 @@ button {
   color: #38bdf8;
   text-decoration: none;
 }
+#lock {
+  max-width: 320px;
+  margin: 100px auto;
+  text-align: center;
+}
+
+#lock input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+#lock button {
+  width: 100%;
+  margin-top: 12px;
+}
