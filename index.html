@@ -20,6 +20,20 @@
           <a href="configs/config1.zip" download>کانفیگ 1</a>
           <p>این کانفیگ برای بازی X است.</p>
         </li>
+        <div id="disqus_thread"></div>
+<script>
+    var disqus_config = function () {
+        this.page.url = PAGE_URL;  // URL صفحه فعلی
+        this.page.identifier = PAGE_IDENTIFIER; // شناسه منحصر به فرد صفحه
+    };
+    (function() {  // اسکریپت دیسکاس
+        var d = document, s = d.createElement('script');
+        s.src = 'https://YOUR_DISQUS_SHORTNAME.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+        
         <li>
           <a href="configs/config2.zip" download>کانفیگ 2</a>
           <p>این کانفیگ برای بازی Y است.</p>
