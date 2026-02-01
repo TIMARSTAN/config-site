@@ -1,53 +1,160 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>کانفیگ‌های رایگان</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>کانفیگ‌های رایگان</title>
+
+<style>
+body{
+  margin:0;
+  font-family:tahoma;
+  background:#0e0e0e;
+  color:#fff;
+}
+
+/* ورود */
+#login{
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+}
+#login input{
+  padding:10px;
+  border:none;
+  border-radius:5px;
+  margin-bottom:10px;
+}
+#login button{
+  padding:10px 20px;
+  background:#ff00ff;
+  color:white;
+  border:none;
+  border-radius:5px;
+}
+
+/* سایت */
+#site{
+  display:none;
+  padding:20px;
+}
+
+header{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.search{
+  width:100%;
+  padding:10px;
+  border-radius:5px;
+  border:none;
+  margin-bottom:20px;
+}
+
+.config{
+  background:#1a1a1a;
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:15px;
+  box-shadow:0 0 10px #ff00ff55;
+}
+
+.btn{
+  padding:8px 12px;
+  border:none;
+  border-radius:5px;
+  margin:5px;
+  cursor:pointer;
+}
+
+.copy{background:#00ccff;}
+.like{background:#ff0066;}
+.telegram{background:#229ED9; width:100%;}
+
+.comment{
+  width:100%;
+  margin-top:10px;
+  padding:8px;
+  border-radius:5px;
+  border:none;
+}
+</style>
 </head>
+
 <body>
-  <header>
-    <h1>خوش آمدید به سایت کانفیگ‌های رایگان</h1>
-    <p>در اینجا می‌توانید کانفیگ‌های رایگان دانلود کنید.</p>
-  </header>
 
-  <main>
-    <section class="configs">
-      <h2>کانفیگ‌های موجود</h2>
-      <ul>
-        <li>
-          <a href="configs/config1.zip" download>کانفیگ 1</a>
-          <p>این کانفیگ برای بازی X است.</p>
-        </li>
-        <div id="disqus_thread"></div>
+<!-- ورود -->
+<div id="login">
+  <h2>ورود به سایت</h2>
+  <input type="password" id="password" placeholder="رمز ورود">
+  <button onclick="login()">ورود</button>
+</div>
+
+<!-- سایت -->
+<div id="site">
+
+<header>
+  <h1>کانفیگ‌های رایگان</h1>
+  <input class="search" id="search" placeholder="جستجو..." onkeyup="searchConfigs()">
+</header>
+
+<div class="config">
+  <h3 class="title">کانفیگ نمونه ۱</h3>
+  <button class="btn copy" onclick="copyText('CONFIG-ONE')">کپی کانفیگ</button>
+  <button class="btn like" onclick="like(this)">❤️ <span>0</span></button>
+  <input class="comment" placeholder="نظر خودتو بنویس (الکی ولی قشنگ)">
+</div>
+
+<div class="config">
+  <h3 class="title">کانفیگ نمونه ۲</h3>
+  <button class="btn copy" onclick="copyText('CONFIG-TWO')">کپی کانفیگ</button>
+  <button class="btn like" onclick="like(this)">❤️ <span>0</span></button>
+  <input class="comment" placeholder="نظر خودتو بنویس">
+</div>
+
+<button class="btn telegram" onclick="window.location.href='https://t.me/yourchannel'">
+عضویت در تلگرام
+</button>
+
+</div>
+
 <script>
-    var disqus_config = function () {
-        this.page.url = PAGE_URL;  // URL صفحه فعلی
-        this.page.identifier = PAGE_IDENTIFIER; // شناسه منحصر به فرد صفحه
-    };
-    (function() {  // اسکریپت دیسکاس
-        var d = document, s = d.createElement('script');
-        s.src = 'https://YOUR_DISQUS_SHORTNAME.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-        
-        <li>
-          <a href="configs/config2.zip" download>کانفیگ 2</a>
-          <p>این کانفیگ برای بازی Y است.</p>
-        </li>
-        <li>
-          <a href="configs/config3.zip" download>کانفیگ 3</a>
-          <p>این کانفیگ برای بازی Z است.</p>
-        </li>
-      </ul>
-    </section>
-  </main>
+/* ورود با رمز */
+function login(){
+  const pass=document.getElementById("password").value;
+  if(pass==="1234"){   // ← رمز ورود
+    document.getElementById("login").style.display="none";
+    document.getElementById("site").style.display="block";
+  }else{
+    alert("رمز اشتباهه");
+  }
+}
 
-  <footer>
-    <p>&copy; 2026 همه حقوق محفوظ است.</p>
-  </footer>
+/* کپی */
+function copyText(text){
+  navigator.clipboard.writeText(text);
+  alert("کپی شد");
+}
+
+/* لایک */
+function like(btn){
+  let span=btn.querySelector("span");
+  span.innerText=parseInt(span.innerText)+1;
+}
+
+/* جستجو */
+function searchConfigs(){
+  let input=document.getElementById("search").value.toLowerCase();
+  let configs=document.querySelectorAll(".config");
+  configs.forEach(c=>{
+    let title=c.querySelector(".title").innerText.toLowerCase();
+    c.style.display= title.includes(input) ? "block":"none";
+  });
+}
+</script>
+
 </body>
 </html>
