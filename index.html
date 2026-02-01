@@ -3,16 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>Config Center</title>
-<link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
-<body style="background:#0f172a;color:white;font-family:sans-serif">
+<body>
 
 <h1>🚀 Config By Bahman</h1>
-<p>به سایت کانفیگ خوش اومدی</p>
+<p>کانفیگ تست – آپدیت روزانه</p>
 
-<textarea style="width:100%;height:100px">
-اینجا بعداً کانفیگ می‌ذاری
+<textarea id="cfg1" readonly>
+اینجا بعداً کانفیگتو می‌ذاری
 </textarea>
+
+<button onclick="copyConfig()">📋 کپی کانفیگ</button>
+
+<script>
+function copyConfig() {
+  const text = document.getElementById("cfg1");
+  text.select();
+  text.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  alert("کپی شد ✅");
+}
+</script>
 
 </body>
 </html>
