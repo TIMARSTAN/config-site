@@ -1,3 +1,4 @@
+/* ====== تنظیمات پایه ====== */
 body {
   background: radial-gradient(circle at top, #0f172a, #020617);
   color: white;
@@ -6,76 +7,215 @@ body {
   padding: 20px;
 }
 
-/* Loading Screen */
-#loading{
+/* ====== Loading Screen ====== */
+#loading {
   position: fixed;
-  width:100%; height:100%;
-  background:#020617;
-  display:flex; flex-direction:column; justify-content:center; align-items:center;
-  z-index:9999; transition:opacity 0.5s ease;
+  inset: 0;
+  background: #020617;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease;
 }
-.loader span{
-  display:inline-block; width:10px; height:10px; margin:5px; background:#22c55e;
-  border-radius:50%; animation:loaderAnim 1s infinite alternate;
+
+.loader span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 5px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: loaderAnim 1s infinite alternate;
 }
-.loader span:nth-child(2){animation-delay:0.2s;}
-.loader span:nth-child(3){animation-delay:0.4s;}
-@keyframes loaderAnim{ 0%{transform:scale(1)} 100%{transform:scale(1.5);} }
-#loading h2{color:#22c55e; margin-top:20px;}
 
-/* عنوان و زیرعنوان */
-.title{text-align:center;text-shadow:0 0 5px #22c55e,0 0 10px #22c55e,0 0 20px #16a34a;}
-.subtitle{text-align:center;color:#94a3b8;margin-bottom:10px;text-shadow:0 0 5px #94a3b8;}
+.loader span:nth-child(2) { animation-delay: 0.2s; }
+.loader span:nth-child(3) { animation-delay: 0.4s; }
 
-/* کارت‌ها */
-.card{
+@keyframes loaderAnim {
+  from { transform: scale(1); }
+  to { transform: scale(1.5); }
+}
+
+#loading h2 {
+  color: #22c55e;
+  margin-top: 20px;
+}
+
+/* ====== عنوان ====== */
+.title {
+  text-align: center;
+  animation: neonPulse 2.5s infinite;
+}
+
+@keyframes neonPulse {
+  0% { text-shadow: 0 0 5px #22c55e; }
+  50% { text-shadow: 0 0 20px #22c55e, 0 0 40px #16a34a; }
+  100% { text-shadow: 0 0 5px #22c55e; }
+}
+
+.subtitle {
+  text-align: center;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+/* ====== کارت‌ها ====== */
+.card {
   background: rgba(2, 6, 23, 0.9);
-  border:1px solid #22c55e;
-  box-shadow:0 0 15px #22c55e33;
-  border-radius:14px;
-  padding:15px;
-  margin-bottom:20px;
-  transition:all 0.3s ease;
+  border: 1px solid #22c55e;
+  box-shadow: 0 0 15px #22c55e33;
+  border-radius: 14px;
+  padding: 15px;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
 }
-.card:hover{ transform:translateY(-5px); box-shadow:0 0 25px #22c55e77; }
 
-/* textarea */
-textarea{ width:100%; height:90px; border-radius:10px; padding:10px; background:#020617; color:#22c55e; border:1px solid #1e293b; }
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px #22c55e77;
+}
 
-/* دکمه‌ها */
-button{ width:auto; margin-top:10px; padding:10px 15px; background:linear-gradient(90deg,#22c55e,#16a34a); border:none; border-radius:10px; font-size:16px; color:black; transition:all 0.3s ease; }
-button:hover{ transform:scale(1.05); cursor:pointer; background:linear-gradient(90deg,#16a34a,#22c55e); }
+/* ====== textarea ====== */
+textarea {
+  width: 100%;
+  height: 90px;
+  border-radius: 10px;
+  padding: 10px;
+  background: #020617;
+  color: #22c55e;
+  border: 1px solid #1e293b;
+  resize: none;
+}
 
-/* دکمه لایک */
-.like-btn{ margin-left:10px; background:#ff3e3e; color:white; display:inline-flex; align-items:center; }
-.like-btn span{margin-left:5px; font-weight:bold;}
-.like-btn:hover{transform:scale(1.1);}
+/* ====== دکمه‌ها ====== */
+button {
+  margin-top: 10px;
+  padding: 10px 15px;
+  background: linear-gradient(90deg, #22c55e, #16a34a);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  color: black;
+  transition: all 0.3s ease;
+}
 
-/* لینک دانلود */
-.download{ display:inline-block; text-align:center; margin-top:8px; color:#38bdf8; text-decoration:none; transition:all 0.3s ease; }
-.download:hover{color:#60a5fa; text-decoration:underline;}
-.telegram-card a.download{ background:#0088cc; color:white; padding:10px; border-radius:10px; }
-.telegram-card a.download:hover{ background:#00aaff; }
+button:hover {
+  transform: scale(1.05);
+  cursor: pointer;
+}
 
-/* صفحه ورود */
-#lock{ max-width:320px; margin:100px auto; text-align:center; opacity:1; transition:opacity 0.8s ease; }
-#lock.unlock{ animation:unlockAnim 0.8s ease forwards; }
-@keyframes unlockAnim{ 0%{opacity:1; transform:scale(1);} 100%{opacity:0; transform:scale(1.2) rotate(10deg);} }
+button:active {
+  transform: scale(0.95);
+}
 
-#lock input{ width:100%; padding:12px; margin-top:10px; border-radius:10px; border:none; font-size:16px; }
-#lock button{ width:100%; margin-top:12px; }
+/* ====== دکمه لایک ====== */
+.like-btn {
+  margin-left: 10px;
+  background: #ff3e3e;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+}
 
-/* نمایش رمز */
-.password-wrapper{ position:relative; }
-.show-pass{ position:absolute; right:15px; top:50%; transform:translateY(-50%); cursor:pointer; color:#22c55e; }
+.like-btn span {
+  margin-left: 6px;
+  font-weight: bold;
+}
 
-/* نوتیفیکیشن کپی */
-#notify{ position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#16a34a; padding:10px 20px; border-radius:10px; opacity:0; transition:opacity 0.3s ease; color:black; font-weight:bold; }
+/* ====== لینک دانلود ====== */
+.download {
+  display: inline-block;
+  margin-top: 8px;
+  color: #38bdf8;
+  text-decoration: none;
+}
 
-/* واکنشگرایی موبایل */
-@media(max-width:480px){
-  body{padding:10px;}
-  .card{padding:12px;}
-  textarea{height:70px;}
-  button{font-size:14px;padding:8px 10px;}
+.download:hover {
+  color: #60a5fa;
+  text-decoration: underline;
+}
+
+.telegram-card a.download {
+  background: #0088cc;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.telegram-card a.download:hover {
+  background: #00aaff;
+}
+
+/* ====== صفحه ورود ====== */
+#lock {
+  max-width: 320px;
+  margin: 100px auto;
+  text-align: center;
+}
+
+#lock.unlock {
+  animation: unlockAnim 0.8s ease forwards;
+}
+
+@keyframes unlockAnim {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.2) rotate(10deg); }
+}
+
+/* ====== فیکس کامل input و آیکن 👁 ====== */
+.password-wrapper {
+  position: relative;
+}
+
+#lock input {
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;
+}
+
+.show-pass {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  cursor: pointer;
+  color: #22c55e;
+  user-select: none;
+}
+
+/* ====== نوتیفیکیشن ====== */
+#notify {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #16a34a;
+  padding: 10px 20px;
+  border-radius: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: black;
+  font-weight: bold;
+}
+
+/* ====== اسکرول نئونی ====== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #22c55e;
+  border-radius: 10px;
+}
+
+/* ====== موبایل ====== */
+@media (max-width: 480px) {
+  body { padding: 10px; }
+  textarea { height: 70px; }
+  button { font-size: 14px; padding: 8px 10px; }
 }
