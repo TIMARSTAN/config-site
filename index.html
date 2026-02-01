@@ -104,14 +104,18 @@ header{
 <div class="config">
   <h3 class="title">کانفیگ نمونه ۱</h3>
   <button class="btn copy" onclick="copyText('CONFIG-ONE')">کپی کانفیگ</button>
-  <button class="btn like" onclick="like(this)">❤️ <span>0</span></button>
+  <button class="btn like" data-id="config1" onclick="like(this)">
+❤️ <span>0</span>
+</button>
   <input class="comment" placeholder="نظر خودتو بنویس (الکی ولی قشنگ)">
 </div>
 
 <div class="config">
   <h3 class="title">کانفیگ نمونه ۲</h3>
   <button class="btn copy" onclick="copyText('CONFIG-TWO')">کپی کانفیگ</button>
-  <button class="btn like" onclick="like(this)">❤️ <span>0</span></button>
+  <button class="btn like" data-id="config2" onclick="like(this)">
+❤️ <span>0</span>
+</button>
   <input class="comment" placeholder="نظر خودتو بنویس">
 </div>
 
@@ -141,19 +145,28 @@ function copyText(text){
 
 /* لایک */
 function like(btn){
-  let span = btn.querySelector("span");
-  let liked = btn.classList.contains("liked");
+  const id = btn.getAttribute("data-id");
+  const span = btn.querySelector("span");
+  const storageKey = "like_" + id;
+
+  let liked = localStorage.getItem(storageKey) === "true";
+  let count = parseInt(span.innerText);
 
   if(!liked){
-    span.innerText = parseInt(span.innerText) + 1;
+    count++;
+    localStorage.setItem(storageKey, "true");
     btn.classList.add("liked");
     btn.style.opacity = "0.6";
   }else{
-    span.innerText = parseInt(span.innerText) - 1;
+    count--;
+    localStorage.setItem(storageKey, "false");
     btn.classList.remove("liked");
     btn.style.opacity = "1";
   }
+
+  span.innerText = count;
 }
+  
 
 /* جستجو */
 function searchConfigs(){
