@@ -1,55 +1,59 @@
-body {
-  background: radial-gradient(circle at top, #0f172a, #020617);
-  color: white;
-  font-family: sans-serif;
-  margin: 0;
-  padding: 20px;
+:root{
+  --bg:#020617;
+  --card:#020617;
+  --border:#22c55e;
+  --text:#ffffff;
 }
 
-/* loading */
-#loading{
-  position:fixed; inset:0;
-  background:#020617;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  z-index:9999;
-  transition:opacity .5s;
+/* neon theme */
+body.neon{
+  --bg:#020617;
+  --card:#0f172a;
+  --border:#38bdf8;
 }
-.loader span{
-  width:10px;height:10px;
-  margin:5px;
-  background:#22c55e;
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:sans-serif;
+  margin:0;
+  padding:20px;
+}
+
+/* theme btn */
+#themeToggle{
+  position:fixed;
+  top:15px;
+  left:15px;
+  z-index:999;
+  border:none;
   border-radius:50%;
-  display:inline-block;
-  animation:load 1s infinite alternate;
+  padding:10px;
 }
-.loader span:nth-child(2){animation-delay:.2s}
-.loader span:nth-child(3){animation-delay:.4s}
-@keyframes load{to{transform:scale(1.6)}}
-
-/* title */
-.title{
-  text-align:center;
-  animation:neon 2.5s infinite;
-}
-@keyframes neon{
-  50%{text-shadow:0 0 25px #22c55e}
-}
-.subtitle{text-align:center;color:#94a3b8}
 
 /* cards */
 .card{
-  background:#020617;
-  border:1px solid #22c55e;
+  background:var(--card);
+  border:1px solid var(--border);
   border-radius:14px;
   padding:15px;
   margin-bottom:20px;
-  box-shadow:0 0 15px #22c55e33;
-  transition:.3s;
+  box-shadow:0 0 15px var(--border);
 }
-.card:hover{transform:translateY(-5px)}
+
+/* VIP */
+.card.vip{
+  border:2px solid gold;
+  box-shadow:0 0 25px gold;
+}
+
+/* neon success */
+.neon-success{
+  animation:flash .8s forwards;
+}
+@keyframes flash{
+  to{opacity:0;transform:scale(1.2)}
+}
 
 /* textarea */
 textarea{
@@ -62,66 +66,36 @@ textarea{
   border:1px solid #1e293b;
 }
 
-/* buttons */
-button{
-  margin-top:10px;
-  padding:10px 15px;
-  border:none;
-  border-radius:10px;
-  background:linear-gradient(90deg,#22c55e,#16a34a);
-  font-size:16px;
-}
-button:active{transform:scale(.95)}
-.like-btn{background:#ff3e3e;color:#fff}
-
 /* login */
-#lock{
-  max-width:320px;
-  margin:100px auto;
-  text-align:center;
-}
 .password-wrapper{position:relative}
-#lock input{
-  width:100%;
-  padding:12px 40px 12px 12px;
-  border-radius:10px;
-  border:none;
-}
 .show-pass{
   position:absolute;
   right:12px;
   top:50%;
   transform:translateY(-50%);
   cursor:pointer;
-  color:#22c55e;
 }
 
-/* neon success */
-#lock.neon-success{
-  animation:flash .9s forwards;
-  box-shadow:0 0 40px #22c55e;
-}
-@keyframes flash{
-  40%{transform:scale(1.05)}
-  100%{opacity:0;transform:scale(1.2)}
-}
-
-/* bg flash */
-body.neon-bg::before{
-  content:"";
+/* loading */
+#loading{
   position:fixed;
   inset:0;
-  background:radial-gradient(circle,#22c55e55,transparent 60%);
-  animation:bg .8s;
+  background:#020617;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
 }
-@keyframes bg{50%{opacity:1}}
-
-/* shake */
-@keyframes shake{
-  25%{transform:translateX(-5px)}
-  50%{transform:translateX(5px)}
-  75%{transform:translateX(-5px)}
+.loader span{
+  width:10px;height:10px;
+  background:#22c55e;
+  margin:5px;
+  display:inline-block;
+  border-radius:50%;
+  animation:load 1s infinite alternate;
 }
+@keyframes load{to{transform:scale(1.6)}}
 
 /* notify */
 #notify{
@@ -133,11 +107,4 @@ body.neon-bg::before{
   padding:10px 20px;
   border-radius:10px;
   opacity:0;
-  transition:.3s;
-}
-
-/* mobile */
-@media(max-width:480px){
-  body{padding:10px}
-  textarea{height:65px}
 }
