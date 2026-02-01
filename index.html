@@ -7,18 +7,30 @@
 </head>
 <body>
 
-<h1>🚀 Config By Bahman</h1>
-<p>کانفیگ تست – آپدیت روزانه</p>
+<h1 class="title">🚀 Config By Bahman</h1>
+<p class="subtitle">آپدیت روزانه • تست‌شده</p>
 
-<textarea id="cfg1" readonly>
-اینجا بعداً کانفیگتو می‌ذاری
-</textarea>
+<div class="card">
+  <h3>Config #1</h3>
+  <textarea id="cfg1" readonly>
+vless://52bc6ff8-b0f5-44b5-8593-9c5fd4405f66@chatgpt.com:443?path=%2FeyJqdW5rIjoiSkc5NlhzOUoxYnVudGEiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6W119%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshahiran.pubgiimobilesuu1.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JAvidshaHIrAN.PUBGiImobiLEsUu1.woRKERS.Dev#%D8%AA%D9%84%DA%AF%D8%B1%D8%A7%D9%85%20%3A%40filter_bahman
+  </textarea>
+  <button onclick="copyConfig('cfg1')">📋 کپی</button>
+  <a class="download" href="configs/config1.txt" download>⬇️ دانلود</a>
+</div>
 
-<button onclick="copyConfig()">📋 کپی کانفیگ</button>
+<div class="card">
+  <h3>Config #2</h3>
+  <textarea id="cfg2" readonly>
+vless://52bc6ff8-b0f5-44b5-8593-9c5fd4405f66@chatgpt.com:2083?path=%2FeyJqdW5rIjoib0xMb1pXWWxHQmRIWk8iLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6W119%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshahiran.pubgiimobilesuu1.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JAVidshAhiran.PuBgIiMObILeSUu1.wORKeRS.Dev#%D8%B3%D8%B1%D8%B9%D8%AA%20%D8%A7%D9%85%D8%A7%D8%B1%D8%AA%D8%AA
+  </textarea>
+  <button onclick="copyConfig('cfg2')">📋 کپی</button>
+  <a class="download" href="configs/config2.txt" download>⬇️ دانلود</a>
+</div>
 
 <script>
-function copyConfig() {
-  const text = document.getElementById("cfg1");
+function copyConfig(id) {
+  const text = document.getElementById(id);
   text.select();
   text.setSelectionRange(0, 99999);
   document.execCommand("copy");
