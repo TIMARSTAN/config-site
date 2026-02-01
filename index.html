@@ -141,8 +141,18 @@ function copyText(text){
 
 /* لایک */
 function like(btn){
-  let span=btn.querySelector("span");
-  span.innerText=parseInt(span.innerText)+1;
+  let span = btn.querySelector("span");
+  let liked = btn.classList.contains("liked");
+
+  if(!liked){
+    span.innerText = parseInt(span.innerText) + 1;
+    btn.classList.add("liked");
+    btn.style.opacity = "0.6";
+  }else{
+    span.innerText = parseInt(span.innerText) - 1;
+    btn.classList.remove("liked");
+    btn.style.opacity = "1";
+  }
 }
 
 /* جستجو */
