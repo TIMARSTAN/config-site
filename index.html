@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>Config By Bahman</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<title>Config By Bahman</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+<!-- 🌟 Loading Screen -->
+<div id="loading">
+  <div class="loader">
+    <span></span><span></span><span></span>
+  </div>
+  <h2>در حال بارگذاری Config By Bahman...</h2>
+</div>
+
 <!-- 🔐 صفحه ورود -->
-<div id="lock" class="card">
+<div id="lock" class="card" style="display:none;">
   <h2>🔐 ورود</h2>
   <p>برای دیدن کانفیگ رمز را وارد کنید</p>
   <div class="password-wrapper">
@@ -24,20 +32,27 @@
   <h1 class="title">🚀 Config By Bahman</h1>
   <p class="subtitle" id="updateTime"></p>
   <p class="subtitle" id="visitCounter"></p>
+  <p class="subtitle" id="onlineUsers">👥 کاربران آنلاین: 1</p>
 
   <!-- 📦 کانفیگ‌ها -->
   <div class="card">
     <h3>Config #1</h3>
     <textarea id="cfg1" readonly>vless://example1...</textarea>
-    <button onclick="copyConfig('cfg1')">📋 کپی</button>
-    <a class="download" href="configs/config1.txt" download>⬇️ دانلود</a>
+    <div class="buttons">
+      <button onclick="copyConfig('cfg1')">📋 کپی</button>
+      <a class="download" href="configs/config1.txt" download>⬇️ دانلود</a>
+      <button class="like-btn" onclick="likeConfig(this, 'cfg1')">❤️ <span>0</span></button>
+    </div>
   </div>
 
   <div class="card">
     <h3>Config #2</h3>
     <textarea id="cfg2" readonly>vless://example2...</textarea>
-    <button onclick="copyConfig('cfg2')">📋 کپی</button>
-    <a class="download" href="configs/config2.txt" download>⬇️ دانلود</a>
+    <div class="buttons">
+      <button onclick="copyConfig('cfg2')">📋 کپی</button>
+      <a class="download" href="configs/config2.txt" download>⬇️ دانلود</a>
+      <button class="like-btn" onclick="likeConfig(this, 'cfg2')">❤️ <span>0</span></button>
+    </div>
   </div>
 
   <!-- 📢 کانال تلگرام -->
@@ -56,44 +71,67 @@
 <script>
 const SITE_PASSWORD = "MMDBAHMAN";
 
-/* چک رمز */
+/* 👁 نمایش/عدم نمایش رمز */
+document.getElementById("togglePass").addEventListener("click", function(){
+  const input = document.getElementById("password");
+  input.type = (input.type === "password") ? "text" : "password";
+});
+
+/* 🔑 چک رمز و انیمیشن ورود */
 function checkPass() {
   const input = document.getElementById("password").value;
   if(input === SITE_PASSWORD){
-    document.getElementById("lock").style.display = "none";
-    document.getElementById("content").style.display = "block";
+    document.getElementById("lock").classList.add("unlock");
+    setTimeout(()=>{
+      document.getElementById("lock").style.display = "none";
+      document.getElementById("content").style.display = "block";
+    }, 800);
   } else {
     alert("رمز اشتباه است ❌");
   }
 }
 
-/* نمایش/عدم نمایش رمز */
-document.getElementById("togglePass").addEventListener("click", function(){
-  const input = document.getElementById("password");
-  if(input.type === "password") input.type = "text";
-  else input.type = "password";
-});
-
-/* کپی کانفیگ با نوتیفیکیشن */
+/* 📋 کپی کانفیگ با نوتیفیکیشن */
 function copyConfig(id) {
   const text = document.getElementById(id);
-  text.select();
   navigator.clipboard.writeText(text.value);
   const notify = document.getElementById("notify");
   notify.style.opacity = 1;
   setTimeout(()=>{notify.style.opacity = 0;}, 1500);
 }
 
-/* تاریخ آپدیت */
+/* ❤️ سیستم لایک */
+function likeConfig(btn, id){
+  let count = parseInt(localStorage.getItem('like_'+id) || 0);
+  count++;
+  localStorage.setItem('like_'+id, count);
+  btn.querySelector('span').innerText = count;
+}
+
+/* ⏱ تاریخ آپدیت */
 document.getElementById("updateTime").innerText =
 "آخرین آپدیت: " + new Date().toLocaleString("fa-IR");
 
-/* شمارنده بازدید ساده */
-let visits = localStorage.getItem("visits") || 0;
+/* 👁 شمارنده بازدید و کاربران آنلاین ساده */
+let visits = parseInt(localStorage.getItem("visits") || 0);
 visits++;
 localStorage.setItem("visits", visits);
 document.getElementById("visitCounter").innerText =
 "👁 بازدید شما: " + visits;
+
+/* کاربران آنلاین شبیه‌سازی */
+let online = 1;
+setInterval(()=>{
+  online = Math.floor(Math.random()*5)+1;
+  document.getElementById("onlineUsers").innerText = "👥 کاربران آنلاین: " + online;
+}, 5000);
+
+/* ⏳ صفحه بارگذاری */
+window.addEventListener('load', ()=>{
+  const loader = document.getElementById('loading');
+  loader.style.opacity = 0;
+  setTimeout(()=>{ loader.style.display='none'; document.getElementById("lock").style.display="block"; }, 800);
+});
 </script>
 </body>
 </html>
