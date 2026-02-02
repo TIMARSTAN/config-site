@@ -88,7 +88,7 @@ textarea{
 عضویت در کانال تلگرام @filter_bahman
 </a>
 
-<!-- CONFIGS -->
+<!-- CONFIG 1 -->
 <div class="config">
   <div class="title">کانفیگ ۱</div>
   <textarea readonly>vless://6a1c07d1-2b0a-44f8-9bf2-4274e79bad55@chatgpt.com:8443?path=%2FeyJqdW5rIjoiUFpndGhIdnowMFd1IiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcm94eWlwIiwicGFuZWxJUHMiOltdfQ%3D%3D%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshah.godallahq.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JAVIdshaH.GOdalLahQ.WoRkers.DEv</textarea>
@@ -98,6 +98,7 @@ textarea{
   </div>
 </div>
 
+<!-- CONFIG 2 -->
 <div class="config">
   <div class="title">کانفیگ ۲</div>
   <textarea readonly>vless://6a1c07d1-2b0a-44f8-9bf2-4274e79bad55@chatgpt.com:2083?path=%2FeyJqdW5rIjoiY2xJMFdtRVo0IiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcm94eWlwIiwicGFuZWxJUHMiOltdfQ%3D%3D%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshah.godallahq.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JaviDShah.gODaLLAhq.wOrKErS.DeV</textarea>
@@ -107,6 +108,7 @@ textarea{
   </div>
 </div>
 
+<!-- CONFIG 3 -->
 <div class="config">
   <div class="title">کانفیگ ۳</div>
   <textarea readonly>vless://6a1c07d1-2b0a-44f8-9bf2-4274e79bad55@chatgpt.com:443?path=%2FeyJqdW5rIjoiWXJWZjhNY1c1WEltbUZjSCIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0%3D%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshah.godallahq.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JAviDshAh.godallAHQ.WOrKERS.dEV</textarea>
@@ -116,6 +118,7 @@ textarea{
   </div>
 </div>
 
+<!-- CONFIG 4 -->
 <div class="config">
   <div class="title">کانفیگ ۴</div>
   <textarea readonly>vless://6a1c07d1-2b0a-44f8-9bf2-4274e79bad55@chatgpt.com:443?path=%2FeyJqdW5rIjoiQ1BpN3ZSMzEiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6W119%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshah.godallahq.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=jAviDSHah.GoDallaHq.wORkeRs.dev</textarea>
@@ -125,6 +128,7 @@ textarea{
   </div>
 </div>
 
+<!-- CONFIG 5 -->
 <div class="config">
   <div class="title">کانفیگ ۵</div>
   <textarea readonly>vless://6a1c07d1-2b0a-44f8-9bf2-4274e79bad55@chatgpt.com:2083?path=%2FeyJqdW5rIjoiaG5Pb2JmSWpmVjhHIiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcm94eWlwIiwicGFuZWxJUHMiOltdfQ%3D%3D%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshah.godallahq.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JavIDshAh.GoDaLlAhq.worKERS.DeV</textarea>
@@ -136,7 +140,6 @@ textarea{
 
 </div>
 
-<script>
 <script>
 const PASSWORD="MMDBAHMAN";
 
@@ -160,43 +163,42 @@ function makeId(t){
 }
 
 function like(btn){
-  const box = btn.closest(".config");
-  const title = box.querySelector(".title").innerText;
-  const id = "like_" + makeId(title);
-  const span = btn.querySelector("span");
+  const box=btn.closest(".config");
+  const title=box.querySelector(".title").innerText;
+  const id="like_"+makeId(title);
+  const span=btn.querySelector("span");
 
-  let data = JSON.parse(localStorage.getItem(id)) || {count:0, liked:false};
+  let data=JSON.parse(localStorage.getItem(id)) || {count:0,liked:false};
 
   if(!data.liked){
     data.count++;
-    data.liked = true;
+    data.liked=true;
     btn.classList.add("liked");
   }else{
     data.count--;
-    data.liked = false;
+    data.liked=false;
     btn.classList.remove("liked");
   }
 
-  span.innerText = data.count;
-  localStorage.setItem(id, JSON.stringify(data));
+  span.innerText=data.count;
+  localStorage.setItem(id,JSON.stringify(data));
 }
 
 function loadLikes(){
   document.querySelectorAll(".config").forEach(box=>{
-    const title = box.querySelector(".title").innerText;
-    const id = "like_" + makeId(title);
-    const btn = box.querySelector(".like");
-    const span = btn.querySelector("span");
+    const title=box.querySelector(".title").innerText;
+    const id="like_"+makeId(title);
+    const btn=box.querySelector(".like");
+    const span=btn.querySelector("span");
 
-    let data = JSON.parse(localStorage.getItem(id));
+    let data=JSON.parse(localStorage.getItem(id));
     if(data){
-      span.innerText = data.count;
+      span.innerText=data.count;
       if(data.liked) btn.classList.add("liked");
     }
   });
 }
 </script>
-
 
 </body>
 </html>
