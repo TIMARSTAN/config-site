@@ -2,195 +2,173 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>کانفیگ‌های رایگان</title>
-
 <style>
 body{
-  margin:0;
   font-family:tahoma;
-  background:#0e0e0e;
+  background:#0f0f14;
   color:#fff;
+  margin:0;
 }
-
-/* ورود */
 #login{
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  flex-direction:column;
 }
-#login input{
-  padding:10px;
-  border:none;
-  border-radius:5px;
-  margin-bottom:10px;
-}
-#login button{
-  padding:10px 20px;
-  background:#ff00ff;
-  color:white;
-  border:none;
-  border-radius:5px;
-}
-
-/* سایت */
-#site{
-  display:none;
-  padding:20px;
-}
-
-header{
+.login-box{
+  background:#1b1b25;
+  padding:25px;
+  border-radius:12px;
   text-align:center;
-  margin-bottom:20px;
 }
-
-.search{
-  width:100%;
+input{
   padding:10px;
-  border-radius:5px;
+  width:100%;
   border:none;
-  margin-bottom:20px;
+  border-radius:8px;
+  margin-top:10px;
 }
-
-.config{
-  background:#1a1a1a;
-  border-radius:10px;
-  padding:15px;
-  margin-bottom:15px;
-  box-shadow:0 0 10px #ff00ff55;
-}
-
-.btn{
-  padding:8px 12px;
+button{
+  margin-top:10px;
+  padding:10px 15px;
   border:none;
-  border-radius:5px;
-  margin:5px;
+  border-radius:8px;
   cursor:pointer;
 }
-
-.copy{background:#00ccff;}
-.like{background:#ff0066;}
-.telegram{background:#229ED9; width:100%;}
-
-.comment{
+#site{display:none;padding:15px;}
+.config{
+  background:#1c1c28;
+  padding:15px;
+  border-radius:12px;
+  margin-bottom:15px;
+}
+.title{font-weight:bold;margin-bottom:8px;}
+textarea{
   width:100%;
-  margin-top:10px;
-  padding:8px;
-  border-radius:5px;
+  height:80px;
+  border-radius:8px;
   border:none;
+  padding:10px;
+}
+.actions{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+}
+.like.liked{color:#ff4d6d;}
+.telegram{
+  display:block;
+  text-align:center;
+  background:#229ED9;
+  color:#fff;
+  padding:12px;
+  border-radius:12px;
+  text-decoration:none;
+  margin:20px 0;
 }
 </style>
 </head>
 
 <body>
 
-<!-- ورود -->
+<!-- LOGIN -->
 <div id="login">
-  <h2>ورود به سایت</h2>
-  <input type="password" id="password" placeholder="رمز ورود">
-  <button onclick="login()">ورود</button>
+  <div class="login-box">
+    <h3>ورود به سایت</h3>
+    <input type="password" id="pass" placeholder="رمز ورود">
+    <button onclick="check()">ورود</button>
+  </div>
 </div>
 
-<!-- سایت -->
+<!-- SITE -->
 <div id="site">
 
-<header>
-  <h1>کانفیگ‌های رایگان</h1>
-  <input class="search" id="search" placeholder="جستجو..." onkeyup="searchConfigs()">
-</header>
+<a class="telegram" href="https://t.me/filter_bahman" target="_blank">
+عضویت در کانال تلگرام @filter_bahman
+</a>
 
+<!-- CONFIGS -->
 <div class="config">
-  <h3 class="title">کانفیگ نمونه اول</h3>
-  <button class="btn copy" onclick="copyText('CONFIG-ONE')">کپی کانفیگ</button>
-  <button class="btn like" onclick="like(this)">❤️ <span>0</span></button>
-  <input class="comment" placeholder="نظر خودتو بنویس">
+  <div class="title">کانفیگ ۱</div>
+  <textarea readonly>vless://6a1c07d1-2b0a-44f8-9bf2-4274e79bad55@chatgpt.com:8443?path=%2FeyJqdW5rIjoiUFpndGhIdnowMFd1IiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcm94eWlwIiwicGFuZWxJUHMiOltdfQ%3D%3D%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshah.godallahq.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JAVIdshaH.GOdalLahQ.WoRkers.DEv</textarea>
+  <div class="actions">
+    <button onclick="copy(this)">کپی</button>
+    <button class="like" onclick="like(this)">❤️ <span>0</span></button>
+  </div>
 </div>
 
 <div class="config">
-  <h3 class="title">کانفیگ نمونه دوم</h3>
-  <button class="btn copy" onclick="copyText('CONFIG-TWO')">کپی کانفیگ</button>
-  <button class="btn like" onclick="like(this)">❤️ <span>0</span></button>
-  <input class="comment" placeholder="نظر خودتو بنویس">
+  <div class="title">کانفیگ ۲</div>
+  <textarea readonly>vless://6a1c07d1-2b0a-44f8-9bf2-4274e79bad55@chatgpt.com:2083?path=%2FeyJqdW5rIjoiY2xJMFdtRVo0IiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcm94eWlwIiwicGFuZWxJUHMiOltdfQ%3D%3D%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshah.godallahq.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JaviDShah.gODaLLAhq.wOrKErS.DeV</textarea>
+  <div class="actions">
+    <button onclick="copy(this)">کپی</button>
+    <button class="like" onclick="like(this)">❤️ <span>0</span></button>
+  </div>
 </div>
 
-<button class="btn telegram" onclick="window.location.href='https://t.me/yourchannel'">
-عضویت در تلگرام
-</button>
+<div class="config">
+  <div class="title">کانفیگ ۳</div>
+  <textarea readonly>vless://6a1c07d1-2b0a-44f8-9bf2-4274e79bad55@chatgpt.com:443?path=%2FeyJqdW5rIjoiWXJWZjhNY1c1WEltbUZjSCIsInByb3RvY29sIjoidmwiLCJtb2RlIjoicHJveHlpcCIsInBhbmVsSVBzIjpbXX0%3D%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshah.godallahq.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JAviDshAh.godallAHQ.WOrKERS.dEV</textarea>
+  <div class="actions">
+    <button onclick="copy(this)">کپی</button>
+    <button class="like" onclick="like(this)">❤️ <span>0</span></button>
+  </div>
+</div>
+
+<div class="config">
+  <div class="title">کانفیگ ۴</div>
+  <textarea readonly>vless://6a1c07d1-2b0a-44f8-9bf2-4274e79bad55@chatgpt.com:443?path=%2FeyJqdW5rIjoiQ1BpN3ZSMzEiLCJwcm90b2NvbCI6InZsIiwibW9kZSI6InByb3h5aXAiLCJwYW5lbElQcyI6W119%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshah.godallahq.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=jAviDSHah.GoDallaHq.wORkeRs.dev</textarea>
+  <div class="actions">
+    <button onclick="copy(this)">کپی</button>
+    <button class="like" onclick="like(this)">❤️ <span>0</span></button>
+  </div>
+</div>
+
+<div class="config">
+  <div class="title">کانفیگ ۵</div>
+  <textarea readonly>vless://6a1c07d1-2b0a-44f8-9bf2-4274e79bad55@chatgpt.com:2083?path=%2FeyJqdW5rIjoiaG5Pb2JmSWpmVjhHIiwicHJvdG9jb2wiOiJ2bCIsIm1vZGUiOiJwcm94eWlwIiwicGFuZWxJUHMiOltdfQ%3D%3D%3Fed%3D2560&security=tls&encryption=none&insecure=0&host=javidshah.godallahq.workers.dev&fp=chrome&type=ws&allowInsecure=0&sni=JavIDshAh.GoDaLlAhq.worKERS.DeV</textarea>
+  <div class="actions">
+    <button onclick="copy(this)">کپی</button>
+    <button class="like" onclick="like(this)">❤️ <span>0</span></button>
+  </div>
+</div>
 
 </div>
 
 <script>
-/* ورود با رمز */
-function login(){
-  const pass=document.getElementById("password").value;
-  if(pass==="1234"){
-    document.getElementById("login").style.display="none";
-    document.getElementById("site").style.display="block";
-    loadLikes();
-  }else{
-    alert("رمز اشتباهه");
-  }
+const PASSWORD="MMDBAHMAN";
+
+function check(){
+  if(pass.value===PASSWORD){
+    login.style.display="none";
+    site.style.display="block";
+  }else alert("رمز اشتباهه");
 }
 
-/* کپی کانفیگ */
-function copyText(text){
-  navigator.clipboard.writeText(text);
+function copy(btn){
+  const ta=btn.parentElement.previousElementSibling;
+  ta.select();
+  document.execCommand("copy");
   alert("کپی شد");
 }
 
-/* ساخت ID از اسم کانفیگ */
-function makeId(text){
-  return text.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9\-]/g,'');
+function makeId(t){
+  return t.replace(/\s+/g,'_');
 }
 
-/* لایک واقعی */
 function like(btn){
-  const box = btn.closest(".config");
-  const title = box.querySelector(".title").innerText;
-  const id = makeId(title);
-  const key = "like_" + id;
+  const box=btn.closest(".config");
+  const title=box.querySelector(".title").innerText;
+  const id=makeId(title);
+  const span=btn.querySelector("span");
+  let liked=localStorage.getItem(id)==="1";
+  let c=parseInt(span.innerText);
 
-  let liked = localStorage.getItem(key) === "true";
-  let span = btn.querySelector("span");
-  let count = parseInt(span.innerText);
+  if(!liked){c++;localStorage.setItem(id,"1");btn.classList.add("liked");}
+  else{c--;localStorage.setItem(id,"0");btn.classList.remove("liked");}
 
-  if(!liked){
-    count++;
-    localStorage.setItem(key,"true");
-    btn.style.opacity="0.6";
-  }else{
-    count--;
-    localStorage.setItem(key,"false");
-    btn.style.opacity="1";
-  }
-
-  span.innerText = count;
-}
-
-/* لود لایک بعد رفرش */
-function loadLikes(){
-  document.querySelectorAll(".config").forEach(box=>{
-    const title = box.querySelector(".title").innerText;
-    const id = makeId(title);
-    const key = "like_" + id;
-    const btn = box.querySelector(".like");
-    const span = btn.querySelector("span");
-
-    if(localStorage.getItem(key)==="true"){
-      btn.style.opacity="0.6";
-    }
-  });
-}
-
-/* جستجو */
-function searchConfigs(){
-  let input=document.getElementById("search").value.toLowerCase();
-  document.querySelectorAll(".config").forEach(c=>{
-    let t=c.querySelector(".title").innerText.toLowerCase();
-    c.style.display=t.includes(input)?"block":"none";
-  });
+  span.innerText=c;
 }
 </script>
 
