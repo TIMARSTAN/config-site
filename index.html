@@ -137,12 +137,14 @@ textarea{
 </div>
 
 <script>
+<script>
 const PASSWORD="MMDBAHMAN";
 
 function check(){
   if(pass.value===PASSWORD){
     login.style.display="none";
     site.style.display="block";
+    loadLikes();
   }else alert("رمز اشتباهه");
 }
 
@@ -158,19 +160,43 @@ function makeId(t){
 }
 
 function like(btn){
-  const box=btn.closest(".config");
-  const title=box.querySelector(".title").innerText;
-  const id=makeId(title);
-  const span=btn.querySelector("span");
-  let liked=localStorage.getItem(id)==="1";
-  let c=parseInt(span.innerText);
+  const box = btn.closest(".config");
+  const title = box.querySelector(".title").innerText;
+  const id = "like_" + makeId(title);
+  const span = btn.querySelector("span");
 
-  if(!liked){c++;localStorage.setItem(id,"1");btn.classList.add("liked");}
-  else{c--;localStorage.setItem(id,"0");btn.classList.remove("liked");}
+  let data = JSON.parse(localStorage.getItem(id)) || {count:0, liked:false};
 
-  span.innerText=c;
+  if(!data.liked){
+    data.count++;
+    data.liked = true;
+    btn.classList.add("liked");
+  }else{
+    data.count--;
+    data.liked = false;
+    btn.classList.remove("liked");
+  }
+
+  span.innerText = data.count;
+  localStorage.setItem(id, JSON.stringify(data));
+}
+
+function loadLikes(){
+  document.querySelectorAll(".config").forEach(box=>{
+    const title = box.querySelector(".title").innerText;
+    const id = "like_" + makeId(title);
+    const btn = box.querySelector(".like");
+    const span = btn.querySelector("span");
+
+    let data = JSON.parse(localStorage.getItem(id));
+    if(data){
+      span.innerText = data.count;
+      if(data.liked) btn.classList.add("liked");
+    }
+  });
 }
 </script>
+
 
 </body>
 </html>
